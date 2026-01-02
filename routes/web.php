@@ -9,8 +9,10 @@ use App\Http\Controllers\RegistrationController;
 
 // Halaman Depan (User)
 Route::get('/', [PublicEventController::class, 'index'])->name('home');
-Route::get('/event/{event}', [PublicEventController::class, 'show'])->name('public.events.show');
-Route::post('/event/{event}/register', [RegistrationController::class, 'store'])->name('registrations.store');
+// Event Detail & Registration
+Route::get('/events/{event}', [PublicEventController::class, 'show'])->name('public.events.show');
+Route::get('/events/{event}/register', [RegistrationController::class, 'create'])->name('public.events.register');
+Route::post('/events/{event}/register', [RegistrationController::class, 'store'])->name('public.events.register.store');
 
 // Cek Pesanan (Guest)
 Route::get('/orders/check', [PublicEventController::class, 'checkOrders'])->name('public.orders.check');
@@ -46,8 +48,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     // Dashboard Admin
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
-    // Kelola Pesanan
-    Route::get('/orders', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
+    // Admin Registrations
+    Route::get('/registrations/export', [AdminRegistrationController::class, 'export'])->name('admin.registrations.export');
+    Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
     Route::put('/orders/{id}/approve', [AdminRegistrationController::class, 'approve'])->name('admin.registrations.approve');
     Route::put('/orders/{id}/reject', [AdminRegistrationController::class, 'reject'])->name('admin.registrations.reject');
 

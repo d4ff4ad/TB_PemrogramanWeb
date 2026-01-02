@@ -8,12 +8,22 @@ use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
+    public function create(Event $event)
+    {
+        return view('frontend.registrations.create', compact('event'));
+    }
+
     public function store(Request $request, Event $event)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone_number' => 'required|string|max:20',
+            'gender' => 'required|in:L,P',
+            'age' => 'required|integer|min:5',
+            'status_peserta' => 'required|string',
+            'previous_participation' => 'required|boolean',
+            'special_needs' => 'nullable|string',
         ]);
 
         // Check quota availability status
@@ -26,6 +36,11 @@ class RegistrationController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'status_peserta' => $request->status_peserta,
+            'previous_participation' => $request->previous_participation,
+            'special_needs' => $request->special_needs,
             'status' => 'pending',
         ]);
 

@@ -4,6 +4,10 @@
 
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-bold text-gray-800">Kelola Pesanan</h1>
+        <a href="{{ route('admin.registrations.export') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition shadow flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            Export Data (.xls)
+        </a>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -13,6 +17,7 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">Event</th>
                         <th scope="col" class="px-6 py-3">Pendaftar</th>
+                        <th scope="col" class="px-6 py-3">Detail</th>
                         <th scope="col" class="px-6 py-3">Bukti Pembayaran</th>
                         <th scope="col" class="px-6 py-3">Status</th>
                         <th scope="col" class="px-6 py-3 text-center">Aksi</th>
@@ -20,16 +25,33 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @forelse($registrations as $registration)
-                        <tr class="hover:bg-gray-50 transition">
+                        <tr class="hover:bg-gray-50 transition {{ $registration->special_needs ? 'bg-yellow-50 border-l-4 border-yellow-400' : '' }}">
                             <td class="px-6 py-4 font-medium text-gray-900">
                                 {{ $registration->event->title }}
                                 <br>
                                 <span class="text-xs text-gray-400">ID: #{{ $registration->id }}</span>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="font-bold text-gray-800">{{ $registration->name }}</div>
+                                <div class="font-bold text-gray-800">
+                                    {{ $registration->name }}
+                                    @if($registration->special_needs)
+                                        <span class="inline-flex items-center justify-center px-2 py-0.5 ml-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full animate-pulse" title="Kebutuhan Khusus: {{ $registration->special_needs }}">
+                                            ⚠️
+                                        </span>
+                                    @endif
+                                </div>
                                 <div class="text-xs">{{ $registration->email }}</div>
                                 <div class="text-xs">{{ $registration->phone_number }}</div>
+                            </td>
+                            <td class="px-6 py-4 text-xs text-gray-600">
+                                <div><span class="font-semibold">Gender:</span> {{ $registration->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</div>
+                                <div><span class="font-semibold">Usia:</span> {{ $registration->age }} Tahun</div>
+                                <div><span class="font-semibold">Status:</span> {{ $registration->status_peserta }}</div>
+                                @if($registration->special_needs)
+                                    <div class="mt-1 p-1 bg-yellow-100 text-yellow-800 rounded font-bold border border-yellow-200">
+                                        ⚠️ Note: {{ $registration->special_needs }}
+                                    </div>
+                                @endif
                             </td>
                             <td class="px-6 py-4">
                                 @if($registration->payment_proof)

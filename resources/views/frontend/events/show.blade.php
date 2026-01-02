@@ -45,28 +45,13 @@
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Daftar Event Ini</h3>
 
                 @if($event->quota > 0)
-                    <form action="{{ route('registrations.store', $event->id) }}" method="POST" class="space-y-4">
-                        @csrf
+                    <div class="space-y-4">
+                        <p class="text-gray-600 text-sm">Klik tombol di bawah untuk mengisi formulir pendaftaran lengkap.</p>
                         
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                            <input type="text" name="name" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Nama Anda" required>
-                        </div>
-
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" name="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="email@contoh.com" required>
-                        </div>
-
-                        <div>
-                            <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">Nomor WhatsApp / HP</label>
-                            <input type="text" name="phone_number" id="phone_number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="0812xxxx" required>
-                        </div>
-
-                        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition shadow-md">
+                        <a href="{{ route('public.events.register', $event->id) }}" class="block w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition shadow-md text-center">
                             Daftar Sekarang
-                        </button>
-                    </form>
+                        </a>
+                    </div>
                     
                     <p class="text-xs text-center text-gray-500 mt-4">Sisa Kuota: {{ $event->quota }} Peserta</p>
                 @else

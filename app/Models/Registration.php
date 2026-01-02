@@ -14,6 +14,11 @@ class Registration extends Model
         'name',
         'email',
         'phone_number',
+        'gender',
+        'age',
+        'status_peserta',
+        'previous_participation',
+        'special_needs',
         'status',
         'payment_proof',
     ];

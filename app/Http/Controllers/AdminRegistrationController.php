@@ -31,15 +31,65 @@ class AdminRegistrationController extends Controller
     {
         $registration = Registration::findOrFail($id);
         
-        // Optional: Return quota if rejected? 
-        // For simplicity, let's just reject for now. 
-        // If we wanted to be strict, we might need to increment quota back.
-        // Let's increment quota back if it was previously counted.
-        // Our logic on store decremented quota.
-        
         $registration->update(['status' => 'rejected']);
         $registration->event->increment('quota');
 
         return back()->with('success', 'Pesanan berhasil ditolak & kuota dikembalikan.');
+    }
+
+    public function export()
+    {
+        $registrations = Registration::with('event')->latest()->get();
+
+        $filename = "data_peserta_".date('Y-m-d_H-i-s').".xls";
+
+        $headers = [
+            "Content-Type" => "application/vnd.ms-excel",
+            "Content-Disposition" => "attachment; filename=\"$filename\"",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
+
+        $content = "<table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Event</th>
+                    <th>Nama Peserta</th>
+                    <th>Email</th>
+                    <th>No. HP</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Usia</th>
+                    <th>Status Peserta</th>
+                    <th>Pernah Ikut</th>
+                    <th>Kebutuhan Khusus</th>
+                    <th>Status Reg</th>
+                    <th>Tanggal Daftar</th>
+                </tr>
+            </thead>
+            <tbody>";
+            
+        foreach ($registrations as $reg) {
+            $prev = $reg->previous_participation ? 'Ya' : 'Tidak';
+            $content .= "<tr>
+                <td>{$reg->id}</td>
+                <td>{$reg->event->title}</td>
+                <td>{$reg->name}</td>
+                <td>{$reg->email}</td>
+                <td>'{$reg->phone_number}</td>
+                <td>{$reg->gender}</td>
+                <td>{$reg->age}</td>
+                <td>{$reg->status_peserta}</td>
+                <td>{$prev}</td>
+                <td>{$reg->special_needs}</td>
+                <td>{$reg->status}</td>
+                <td>{$reg->created_at}</td>
+            </tr>";
+        }
+        
+        $content .= "</tbody></table>";
+
+        return response($content, 200, $headers);
     }
 }
