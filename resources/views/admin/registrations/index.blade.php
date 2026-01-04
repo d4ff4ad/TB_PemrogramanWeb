@@ -88,6 +88,16 @@
                                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-bold transition">Tolak</button>
                                         </form>
                                     </div>
+                                @elseif($registration->status == 'confirmed')
+                                    @if($registration->attended_at)
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-bold">
+                                            Hadir ✅
+                                        </span>
+                                    @else
+                                        <span class="text-xs text-gray-500">
+                                            Belum Check-in
+                                        </span>
+                                    @endif
                                 @else
                                     <span class="text-gray-400 text-xs">-</span>
                                 @endif

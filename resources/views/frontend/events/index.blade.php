@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="text-center mb-12">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Jelajahi Event Seru</h1>
-        <p class="text-gray-500 mb-6">Temukan berbagai kegiatan menarik di sekitarmu</p>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">KAJIAN UHA</h1>
+        <p class="text-gray-500 mb-6">Ayo Menata Hati Bersama Ustadz Hanan Attaqi </p>
         
         <!-- Search Form -->
         <form action="{{ route('home') }}" method="GET" class="max-w-xl mx-auto flex">

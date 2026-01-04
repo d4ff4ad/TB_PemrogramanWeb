@@ -9,7 +9,7 @@ class PublicEventController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Event::query();
+        $query = Event::whereDate('start_time', '>=', now());
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
@@ -58,5 +58,16 @@ class PublicEventController extends Controller
         }
 
         return view('frontend.tickets.print', compact('registration'));
+    }
+
+    public function downloadCertificate($id)
+    {
+        $registration = \App\Models\Registration::with('event')->findOrFail($id);
+
+        if (!$registration->attended_at) {
+            return abort(403, 'Sertifikat belum tersedia. Anda belum melakukan Check-in kehadiran.');
+        }
+
+        return view('frontend.certificates.print', compact('registration'));
     }
 }

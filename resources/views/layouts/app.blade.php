@@ -42,6 +42,7 @@
                         <a href="{{ route('admin.dashboard') }}" class="text-gray-600 hover:text-indigo-600 font-medium text-sm">Dashboard</a>
                         <a href="{{ route('admin.events.table') }}" class="text-gray-600 hover:text-indigo-600 font-medium text-sm">Kelola Event</a>
                         <a href="{{ route('admin.registrations.index') }}" class="text-gray-600 hover:text-indigo-600 font-medium text-sm">Kelola Pesanan</a>
+                        <a href="{{ route('admin.attendance.index') }}" class="text-indigo-600 font-bold bg-indigo-50 px-3 py-1 rounded-lg text-sm border border-indigo-200 hover:bg-indigo-100 transition">Absensi Hari-H</a>
                         
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
@@ -64,6 +65,7 @@
                     <a href="{{ route('admin.dashboard') }}" class="text-gray-600 hover:text-indigo-600 font-medium text-sm block">Dashboard</a>
                     <a href="{{ route('admin.events.table') }}" class="text-gray-600 hover:text-indigo-600 font-medium text-sm block">Kelola Event</a>
                     <a href="{{ route('admin.registrations.index') }}" class="text-gray-600 hover:text-indigo-600 font-medium text-sm block">Kelola Pesanan</a>
+                    <a href="{{ route('admin.attendance.index') }}" class="text-indigo-600 font-bold bg-indigo-50 px-3 py-2 rounded-lg text-sm block border border-indigo-200">Absensi Hari-H</a>
                     
                     <div class="pt-2 border-t border-gray-100">
                         <form action="{{ route('logout') }}" method="POST">
@@ -102,7 +104,7 @@
 
     <footer class="bg-white border-t border-gray-200 mt-auto py-6">
         <div class="max-w-6xl mx-auto px-4 text-center text-gray-500 text-sm">
-            &copy; {{ date('Y') }} Eventify Project. Dibuat dengan Laravel.
+            &copy; {{ date('Y') }} Eventify Project.
             @guest
                 <br><a href="{{ route('login') }}" class="text-gray-300 hover:text-gray-500 text-xs mt-2 inline-block">Login Admin</a>
             @endguest

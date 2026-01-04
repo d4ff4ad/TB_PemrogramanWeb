@@ -6,6 +6,9 @@ use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\AdminAttendanceController;
 
 // Halaman Depan (User)
 Route::get('/', [PublicEventController::class, 'index'])->name('home');
@@ -19,18 +22,18 @@ Route::get('/orders/check', [PublicEventController::class, 'checkOrders'])->name
 Route::get('/orders/check', [PublicEventController::class, 'checkOrders'])->name('public.orders.check');
 Route::get('/orders/my-orders', [PublicEventController::class, 'indexOrders'])->name('public.orders.index');
 Route::get('/orders/{id}/ticket', [PublicEventController::class, 'printTicket'])->name('public.orders.ticket');
+Route::get('/orders/{id}/certificate', [PublicEventController::class, 'downloadCertificate'])->name('public.orders.certificate');
 
 Route::get('/registrations/{id}/payment', [RegistrationController::class, 'payment'])->name('registrations.payment');
 Route::put('/registrations/{id}/payment', [RegistrationController::class, 'updatePayment'])->name('registrations.updatePayment');
 
-use App\Http\Controllers\AuthController;
+
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-use App\Http\Controllers\AdminRegistrationController;
 
 // Halaman Admin (CRUD Event) - Protected
 Route::middleware(['auth'])->prefix('admin')->group(function () {
@@ -53,7 +56,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
     Route::put('/orders/{id}/approve', [AdminRegistrationController::class, 'approve'])->name('admin.registrations.approve');
     Route::put('/orders/{id}/reject', [AdminRegistrationController::class, 'reject'])->name('admin.registrations.reject');
+    Route::post('/registrations/{id}/checkin', [AdminRegistrationController::class, 'checkIn'])->name('admin.registrations.checkin');
 
-    // Old redirect removed
+    // Absensi Hari-H
+    Route::get('/attendance', [AdminAttendanceController::class, 'index'])->name('admin.attendance.index');
+    Route::get('/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
+    Route::post('/attendance/{id}/store', [AdminAttendanceController::class, 'store'])->name('admin.attendance.store');
 
 });

@@ -21,6 +21,11 @@ class Registration extends Model
         'special_needs',
         'status',
         'payment_proof',
+        'attended_at',
+    ];
+
+    protected $casts = [
+        'attended_at' => 'datetime',
     ];
 
     public function event()

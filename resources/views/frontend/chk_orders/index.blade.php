@@ -22,6 +22,11 @@
                             <a href="{{ route('public.orders.ticket', $registration->id) }}" target="_blank" class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700 transition">
                                 🖨️ Cetak Tiket
                             </a>
+                            @if($registration->attended_at)
+                                <a href="{{ route('public.orders.certificate', $registration->id) }}" target="_blank" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded-lg text-xs font-bold hover:bg-yellow-600 transition ml-2">
+                                    📜 Unduh Syahadah
+                                </a>
+                            @endif
                         @elseif($registration->status == 'rejected')
                             <span class="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-bold">Ditolak</span>
                         @endif
